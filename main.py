@@ -18,6 +18,8 @@ def find_bill(beg, end):
         print bill
 
 def main():
+    if len(sys.argv) == 1:
+        sys.argv.append('-h')
     args = parser.parse_args(sys.argv[1:])
     if args.add:
         add_bill(float(args.add[0]), args.add[1])
