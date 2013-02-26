@@ -44,12 +44,6 @@ class Bill(object):
                     " and datetime(time) <= ?;", (beg, end)).fetchall()
             return [cls(*r) for r in rs] if rs else []
 
-    @classmethod
-    def test(cls):
-        db = get_db()
-        rs = db.execute("select datetime(time) from billdb;").fetchall()
-        return rs
-
 def get(id):
     return Bill.get(id)
 
@@ -59,6 +53,3 @@ def add(cost, comment):
 def find(beg, end):
     return Bill.find(beg, end)
 
-
-if __name__ == '__main__':
-    print Bill.test()
