@@ -28,16 +28,27 @@ class Bill(object):
         db = get_db()
         with db:
             rs = db.execute("insert into billdb (time, cost, comment) "
-                    "values (?, ?, ?);", (datetime.now(), cost, comment))
+                    " values (?, ?, ?);", (datetime.now(), cost, comment))
             return rs.lastrowid if rs else None
 
     @classmethod
     def find(cls, beg, end):
+        beg = datetime.strptime(beg, '%Y%m%d')
+        if end != 'now':
+            end = datetime.strptime(end, '%Y%m%d')
+        else:
+            end = datetime.now()
         db = get_db()
         with db:
-            rs = db.execute("select * from billdb where datetime(time) > ? and datetime(time) <= ?;", 
-                    (datetime.strptime(beg, '%Y-%m-%d'), datetime.strptime(end, '%Y-%m-%d'))).fetchall()
+            rs = db.execute("select * from billdb where datetime(time) > ? "
+                    " and datetime(time) <= ?;", (beg, end)).fetchall()
             return [cls(*r) for r in rs] if rs else []
+
+    @classmethod
+    def test(cls):
+        db = get_db()
+        rs = db.execute("select datetime(time) from billdb;").fetchall()
+        return rs
 
 def get(id):
     return Bill.get(id)
@@ -49,3 +60,5 @@ def find(beg, end):
     return Bill.find(beg, end)
 
 
+if __name__ == '__main__':
+    print Bill.test()
