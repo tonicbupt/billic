@@ -35,7 +35,7 @@ class Bill(object):
         with db:
             rs = db.execute("select * from billdb where datetime(time) > ? and datetime(time) <= ?;", 
                     (datetime.strptime(beg, '%Y-%m-%d'), datetime.strptime(end, '%Y-%m-%d'))).fetchall()
-            return [Bill(r[0], r[1], r[2], r[3]) for r in rs] if rs else []
+            return [Bill(*r) for r in rs] if rs else []
 
 def get(id):
     return Bill.get(id)
