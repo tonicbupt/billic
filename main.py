@@ -32,7 +32,7 @@ def main():
     if args.find:
         get_bill(args.find[0])
     if args.count:
-        count_all(args.list[0], args.list[1])
+        count_all(args.count[0], args.count[1])
 
 if __name__ == '__main__':
     main()
