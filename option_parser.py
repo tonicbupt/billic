@@ -8,4 +8,5 @@ parser = argparse.ArgumentParser(description='bill')
 parser.add_argument('-add', nargs=2, help='增加新条目, -add cost comment')
 parser.add_argument('-list', nargs=2, help='查询条目, -list beg end')
 parser.add_argument('-find', nargs=1, help='查询条目, -find id')
+parser.add_argument('-count', nargs=2, help='总支出, -count beg end')
 

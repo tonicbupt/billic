@@ -17,6 +17,10 @@ def find_bill(beg, end):
     for bill in bills:
         print bill
 
+def count_all(beg, end):
+    bills = find(beg, end)
+    print 'total: ', sum([b.cost for b in bills if b and b.cost])
+
 def main():
     if len(sys.argv) == 1:
         sys.argv.append('-h')
@@ -27,6 +31,8 @@ def main():
         find_bill(args.list[0], args.list[1])
     if args.find:
         get_bill(args.find[0])
+    if args.count:
+        count_all(args.list[0], args.list[1])
 
 if __name__ == '__main__':
     main()
