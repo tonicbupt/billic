@@ -19,14 +19,16 @@ class Bill(object):
     def get(cls, id):
         db = get_db()
         with db:
-            rs = db.execute("select `id`, `time`, `cost`, `comment` from billdb where `id`= ?", (id,)).fetchone()
-            return Bill(rs[0], rs[1], rs[2], rs[3]) if rs else None
+            rs = db.execute("select `id`, `time`, `cost`, "
+                    " `comment` from billdb where `id`= ?", (id,)).fetchone()
+            return cls(*rs) if rs else None
 
     @classmethod
     def add(cls, cost, comment):
         db = get_db()
         with db:
-            rs = db.execute("insert into billdb (time, cost, comment) values (?, ?, ?);", (datetime.now(), cost, comment))
+            rs = db.execute("insert into billdb (time, cost, comment) "
+                    "values (?, ?, ?);", (datetime.now(), cost, comment))
             return rs.lastrowid if rs else None
 
     @classmethod
@@ -35,7 +37,7 @@ class Bill(object):
         with db:
             rs = db.execute("select * from billdb where datetime(time) > ? and datetime(time) <= ?;", 
                     (datetime.strptime(beg, '%Y-%m-%d'), datetime.strptime(end, '%Y-%m-%d'))).fetchall()
-            return [Bill(*r) for r in rs] if rs else []
+            return [cls(*r) for r in rs] if rs else []
 
 def get(id):
     return Bill.get(id)
