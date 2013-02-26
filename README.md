@@ -2,7 +2,6 @@ billic
 ---
 
 一个shell下记账的小软件
-
 ---
 #usage:
 * ./main.py -add cost comment 增加一条记录, cost和comment分别是支出和说明
